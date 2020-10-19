@@ -15,23 +15,25 @@ pygame.init()
 screen = pygame.display.set_mode((800,600))
 #tittle and icon
 pygame.display.set_caption("SURVIVAL")
-logo = pygame.image.load("icon.png")
+logo = pygame.image.load("astronaut.png")
 pygame.display.set_icon(logo)
 
+# Background
+background = pygame.image.load('background.jpg')
 
 #background sound
 mixer.music.load("background.wav")
 mixer.music.play(-1)
 
 #player
-playerimg = pygame.image.load("casey.png")
+playerimg = pygame.image.load("astronaut.png")
 playerX = 370
 playerY = 480
 playerX_change = 0
 playerY_change = 0
 
 #Item
-weaponimg = pygame.image.load("apple.png")
+weaponimg = pygame.image.load("start.png")
 weaponX = random.randint(10,650)
 weaponY = random.randint(200,550)
 weapon_state = "ready"
@@ -100,8 +102,8 @@ def item(x,y,) :
     screen.blit(weaponimg,(x,y))
 
 def iscollision(playerX,playerY,weaponX,weaponY):
-    distance = math.sqrt((math.pow(playerX-weaponX+15,2)) + (math.pow(playerY-weaponY+15,2)))
-    if distance < 35  and weapon_state == "pressed":
+    distance = math.sqrt((math.pow(playerX-weaponX+24,2)) + (math.pow(playerY-weaponY+15,2)))
+    if distance < 40  and weapon_state == "pressed":
         return True
     else :
         return False
@@ -110,7 +112,8 @@ def iscollision(playerX,playerY,weaponX,weaponY):
 running = True
 while running : 
     #RGB
-    screen.fill((34,139,34))
+    # screen.fill((34,139,34))
+    screen.blit(background, (0, 0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT :
@@ -126,8 +129,8 @@ while running :
             if event.key == pygame.K_DOWN :
                 playerY_change = 6
             if event.key == pygame.K_SPACE :
-                distances = math.sqrt((math.pow(playerX-weaponX+15,2)) + (math.pow(playerY-weaponY+15,2)))
-                if weapon_state == "ready" and distances < 35:
+                distances = math.sqrt((math.pow(playerX-weaponX+24,2)) + (math.pow(playerY-weaponY+15,2)))
+                if weapon_state == "ready" and distances < 40:
                     weapon_state = "pressed"
                     iscollision(playerX,playerY,weaponX,weaponY)
                     
@@ -161,8 +164,8 @@ while running :
         playerY = 536
 
     for i in range(num_of_comet) :
-        distances = math.sqrt((math.pow(cometX[i] - playerX,2)) + (math.pow(cometY[i] - playerY,2)))
-        if distances < 27 :
+        distances = math.sqrt((math.pow(cometX[i]+15 - playerX,2)) + (math.pow(cometY[i] - playerY,2)))
+        if distances < 50 :
             for j in range(num_of_comet)    :
                 collision_sound = mixer.Sound("explosion.wav")
                 collision_sound.play()
