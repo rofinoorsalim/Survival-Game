@@ -36,11 +36,6 @@ weaponX = random.randint(10,650)
 weaponY = random.randint(200,550)
 weapon_state = "ready"
 
-#play
-playimg = pygame.image.load("play.png")
-playX = 370
-playY = 480
-
 #Comet
 cometimg = []
 cometX = []
@@ -54,10 +49,6 @@ for i in range(num_of_comet) :
     cometX.append(random.randint(50,700))
     cometY.append(random.randint(-100,0))
     cometY_change.append(40)
-
-#Game over text
-over_font = pygame.font.Font("freesansbold.ttf", 64)
-gameO = False
 
 #Credit
 credit_font = pygame.font.Font("freesansbold.ttf", 16)
@@ -75,22 +66,10 @@ font = pygame.font.Font("freesansbold.ttf", 32)
 textX = 10
 textY = 50
 
-#Score
+#Level
 level_value = 1
 levelX = 10
 levelY = 10
-
-#taken
-takeX = 370
-takeY = 480
-
-def game_over_text() :
-    over_text = over_font.render("GAME OVER",True, (255,0,0))
-    screen.blit(over_text, (200, 250))
-
-def taken(x,y) :
-    taken = font.render("Item collected",True, (0,0,0))
-    screen.blit(taken, (x, y))
 
 def credit(x,y) :
     credit = credit_font.render("Created by RofiGanteng",True, (255,0,0))
@@ -187,7 +166,6 @@ while running :
             for j in range(num_of_comet)    :
                 collision_sound = mixer.Sound("explosion.wav")
                 collision_sound.play()
-                gameO = True
                 playerX = 370
                 playerY = 480
                 score_value = 0
@@ -198,24 +176,18 @@ while running :
             cometY_change[i] = 5
             
             if score_value >= 10 and score_value < 20:
-                # levels_sound = mixer.Sound("level.wav")
-                # levels_sound.play()
                 level_value = 2
                 cometY_change[i] += 2
             elif score_value >= 20  and score_value < 30:
-                # level_sound.play()
                 level_value = 3
                 cometY_change[i] += 3
             elif score_value >= 30 and score_value < 40:
-                # level_sound.play()
                 level_value = 4
                 cometY_change[i] += 4
             elif score_value >= 40 and score_value < 50 :
-                # level_sound.play()
                 level_value = 5
                 cometY_change[i] += 5
             elif score_value >= 50 :
-                # level_sound.play() 
                 level_value = "max"
                 cometY_change[i] += 6
             cometY[i] += cometY_change[i]
